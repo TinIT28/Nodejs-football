@@ -1,0 +1,100 @@
+<div class="modal fade" id="editNationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createNationModalLabel">Edit a nation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" id="edit-nation-form">
+          <div class="mb-3">
+            <label class="col-form-label">Name:</label>
+            <input type="text" class="form-control" id="edit-nation-name" name="name" value="{{nation.name}}">
+            <p class="message-error"></p>
+          </div>
+          <div class="mb-3">
+            <label class="col-form-label">Description:</label>
+            <input type="text" class="form-control" id="edit-nation-description" name="description" value="{{nation.description}}">
+            <p class="message-error"></p>
+          </div>
+          <div class="mb-3">
+            <label class="col-form-label">Image URL:</label>
+            <textarea class="form-control" name="image" id="edit-nation-image" aria-valuenow="{{nation.image}}"></textarea>
+            <p class="message-error"></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var editModal = document.getElementById('editNationModal')
+  editModal.addEventListener('show.bs.modal', function (event) {
+    // Button that triggered the modal
+    var button = event.relatedTarget
+    // Extract info from data-bs-* attributes
+    var recipient = button.getAttribute('data-bs-whatever')
+    // If necessary, you could initiate an AJAX request here
+    // and then do the updating in a callback.
+    //
+    // Update the modal's content.
+    var modalTitle = exampleModal.querySelector('.modal-title')
+    var modalBodyInput = exampleModal.querySelector('.modal-body input')
+
+    modalTitle.textContent = 'Edit a ' + recipient
+  })
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector("#editNationModal");
+    const nameInput = form.querySelector("input[name='name']");
+    const descriptionInput = form.querySelector("input[name='description']");
+    const imageInput = form.querySelector("textarea[name='image']");
+    const errorTags = form.querySelectorAll(".message-error");
+
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+      const nameValue = nameInput.value.trim();
+      const descriptionValue = descriptionInput.value.trim();
+      const imageValue = imageInput.value.trim();
+
+      if (!nameValue) {
+        errorTags[0].textContent = "Please enter a name.";
+      } else {
+        errorTags[0].textContent = "";
+      }
+
+      if (!descriptionValue) {
+        errorTags[1].textContent = "Please enter a description.";
+      } else {
+        errorTags[1].textContent = "";
+      }
+
+      if (!imageValue) {
+        errorTags[2].textContent = "Please enter an image URL.";
+      } else if (!isValidImageUrl(imageValue)) {
+        errorTags[2].textContent = "Please enter a valid image URL.";
+      } else {
+        errorTags[2].textContent = "";
+      }
+
+      if (nameValue && descriptionValue && imageValue && isValidImageUrl(imageValue)) {
+        form.submit();
+      }
+    });
+
+    function isValidImageUrl(url) {
+      // This regex pattern matches URLs that end with a valid image file extension
+      const imagePattern = /\.(gif|jpe?g|png|webp|bmp)$/i;
+      return imagePattern.test(url);
+    }
+  });
+</script>
+
+

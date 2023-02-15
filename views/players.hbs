@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css"
+    integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="/stylesheets/nations.css">
+  <title>{{ title }}</title>
+</head>
+
+<body>
+  {{> header}}
+  <div class="list-nations-container">
+    <h1>Players</h1>
+    <button id="create-player-btn" class="btn-create-nation" data-bs-toggle="modal" data-bs-target="#createPlayerModal">
+      <i class="fa-solid fa-plus"></i>
+      Create new player
+    </button>
+    <div class="container">
+      <div class="row w-100">
+        {{#each players}}
+        <div class="col-md-3 col-sm-2 ">
+          <div class="card-players">
+            <div class="card-players-image">
+              <img src="{{this.image}}" alt="{{this.name}}" />
+            </div>
+            <div class="card-nations-body">
+              <h3 class="card-nations-name">{{this.name}}</h3>
+            </div>
+            <div class="card-nations-footer">
+              <button id="edit-player-btn" data-bs-toggle="modal" data-bs-target="#editPlayerModal"
+                class="card-nations-btn-edit" onclick="openEditModal('{{this._id}}')">
+                <i class="fa-solid fa-pen"></i>
+                Edit
+              </button>
+              <button data-id="{{this._id}}" data-bs-toggle="modal" data-bs-target="#deleteNationModal" class="card-nations-btn-delete">
+                <i class="fa-solid fa-trash"></i>
+                Delete
+              </button>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+  </div>
+
+  {{> modalEditPlayer}}
+  {{> modalCreatePlayer}}
+  {{> footer}}
+</body>
+
+<script>
+  function openEditModal(playerId) {
+    // make an AJAX request to get the nation data
+    $.ajax({
+      url: '/players/edit/' + playerId,
+      method: 'GET',
+      success: function (data) {
+        // populate the modal fields with the nation data
+        $('#edit-player-form').attr('action', '/players/edit/' + data.player.id + '?_method=PUT');
+        $('#edit-player-id').val(data.player.id)
+        $('#edit-player-name').val(data.player.name);
+        $('#edit-player-description').val(data.player.description);
+        $('#edit-player-position').val(data.player.position);
+        $('#edit-player-goals').val(data.player.goals);
+        $('#edit-player-club').val(data.player.club);
+        $('#edit-player-isCaptain').val(data.player.isCaptain);
+        $('#edit-player-image').val(data.player.image);
+      }
+    });
+  }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
+  integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+  crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+</html>

@@ -1,0 +1,38 @@
+<div class="modal fade" id="deleteNationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Delete nation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Do you want delete nation?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button id="btn-delete-nation" type="button" class="btn btn-danger">Delete</button>
+                </div>
+            </div>
+    </div>
+</div>
+
+{{!-- Delete form hidden --}}
+<form action="POST" name="delete-nation-form"></form>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var nationId;
+        var deleteForm = document.forms['delete-nation-form'];
+        var btnDeleteNation = document.getElementById('btn-delete-nation');
+        $('#deleteNationModal').on('show.bs.modal', function(event) {
+            var button = $(event.relatedTarget);
+            nationId = button.data('id');
+        });
+
+        btnDeleteNation.onclick = function() {
+            deleteForm.method = "POST";
+            deleteForm.action = '/nations/delete/' + nationId + '?_method=DELETE';
+            deleteForm.submit();
+        }
+    });
+</script>

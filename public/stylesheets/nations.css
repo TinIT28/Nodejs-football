@@ -1,0 +1,153 @@
+.img-flag {
+    width: 100%;
+    height: 50px;
+}
+
+body {
+    width: 100%;
+}
+
+
+.card-nations-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.card-nations {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 300px;
+    margin: 10px;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: all 0.5s ease-in-out;
+    transform: scale(1);
+    border-radius: 10px;
+}
+
+.card-nations:hover, .card-players:hover {
+    transform: scale(1.1);
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+}
+
+.card-players {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    min-width: 300px;
+    margin: 10px;
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: all 0.5s ease-in-out;
+    transform: scale(1);
+    border-radius: 10px;
+}
+
+.card-nations-image img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    object-position: top;
+}
+
+.card-players-image img {
+    height: 300px;
+    width: 100%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.card-nations-name {
+    font-weight: bold;
+    font-size: large;
+    margin: 5px 0;
+}
+
+.card-nations-description {
+    margin: 5px 0;
+}
+
+.card-nations-btn-edit {
+    margin: 0 10px 0 0;
+}
+
+.card-nations-btn-edit {
+    color: #fff;
+    outline: none;
+    background-color: #33992a;
+    padding: 8px;
+    margin: 0 10px 5px 0;
+    border-radius: 5px;
+    border: none;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+.card-nations-btn-edit:hover {
+    background-color: #2c7b23;
+    cursor: pointer;
+    color: #fff;
+}
+
+.card-nations-btn-delete {
+    color: #fff;
+    outline: none;
+    background-color: #da2121;
+    text-decoration: none;
+    padding: 8px;
+    margin: 0 0px 5px 10px;
+    border-radius: 5px;
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.card-nations-btn-delete:hover {
+    background-color: #ff5151;
+    cursor: pointer;
+    color: #fff;
+}
+
+.btn-create-nation {
+    padding: 15px;
+    margin: 10px 0px 10px 120px;
+    background-color: #5384eee7;
+    border: 1px solid #3f63b1e7;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+    font-weight: 600;
+    text-transform: uppercase;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.btn-create-nation:hover {
+    background-color: #4e77cfe7;
+    cursor: pointer;
+}
+
+.list-nations-container {
+    position: relative;
+    top: 110px;
+    height: fit-content;
+    margin-bottom: 150px;
+}
+
+.list-nations-container h1 {
+    display: flex;
+    justify-content: center;
+    font-size: xx-large;
+    color: #AA1731;
+}
+
+.message-error {
+    color: #df3939;
+    text-transform: inherit;
+}
+
+footer {
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #333;
+    color: white;
+    bottom: 0;
+    width: 100%;
+}

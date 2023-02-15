@@ -1,0 +1,28 @@
+{
+  "name": "football-players",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "nodemon ./bin/www",
+    "dev": "nodemon server.js"
+  },
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "dotenv": "^16.0.3",
+    "ejs": "^3.1.8",
+    "express": "~4.16.1",
+    "handlebars": "^4.7.7",
+    "hbs": "^4.2.0",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "method-override": "^3.0.0",
+    "mongoose": "^6.9.1",
+    "morgan": "~1.9.1",
+    "nodemon": "^2.0.20",
+    "scss": "^0.2.4"
+  },
+  "devDependencies": {
+    "express-handlebars": "^6.0.7"
+  }
+}
