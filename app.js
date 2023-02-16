@@ -21,23 +21,14 @@ app.use(methodOverride("_method"));
 app.set("view engine", "hbs");
 app.set("views", path.join(__dirname, "views"));
 hbs.registerPartials(__dirname + "/views/layouts");
-hbs.registerHelper('ifCond', function (v1, operator, v2, options) {
-  switch (operator) {
-    case '===':
-      return (v1 === v2) ? options.fn(this) : options.inverse(this);
-    case '!==':
-      return (v1 !== v2) ? options.fn(this) : options.inverse(this);
-    case '<':
-      return (v1 < v2) ? options.fn(this) : options.inverse(this);
-    case '<=':
-      return (v1 <= v2) ? options.fn(this) : options.inverse(this);
-    case '>':
-      return (v1 > v2) ? options.fn(this) : options.inverse(this);
-    case '>=':
-      return (v1 >= v2) ? options.fn(this) : options.inverse(this);
-    default:
-      return options.inverse(this);
-  }
+hbs.registerHelper("stringify", function (obj) {
+  return JSON.stringify(obj);
+});
+hbs.registerHelper("eq", function (a, b) {
+  return a === b;
+});
+hbs.registerHelper("toString", function (a) {
+  return a.toString();
 });
 app.use(express.static(__dirname + "/public"));
 

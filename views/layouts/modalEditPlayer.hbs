@@ -21,29 +21,29 @@
                     </div>
                     <div class="mb-3">
                         <label class="col-form-label">Club:</label>
-                        <select class="form-select" name="club">
-                            {{#each clubData}}
-                            <option value="{{this.name}}">
-                                {{this.name}}
+                        <select id="edit-player-club" class="form-select" name="club">
+                            {{#each clubs}}
+                            <option value="{{name}}">
+                                {{name}}
                             </option>
                             {{/each}}
                         </select>
                     </div>
                     <div class="mb-3">
                         <label class="col-form-label">Position:</label>
-                        <select  class="form-select" name="position">
-                            {{#each positionData}}
-                            <option id="edit-player-position" value="{{this.name}}" {{#if (eq  player.position)}}selected{{/if}}>
-                                {{this.name}}
+                        <select id="edit-player-position" class="form-select" name="position">
+                            {{#each positions}}
+                            <option value="{{name}}" {{#if (eq (stringify name) (stringify player.position))}}selected{{/if}}>
+                                {{name}}
                             </option>
                             {{/each}}
                         </select>
                     </div>
                     <div class="mb-3">
                         <label class="col-form-label">Is Captain:</label>
-                        <select class="form-select" name="isCaptain">
-                            {{#each isCaptainData}}
-                            <option id="edit-player-isCaptain" value="{{this.value}}" {{#ifEqual value ../player.isCaptain}}selected{{/ifEqual}}>
+                        <select id="edit-player-isCaptain" class="form-select" name="isCaptain">
+                            {{#each captain}}
+                            <option value="{{this.value}}" {{#if (eq this.value player.isCaptain)}}selected{{/if}}>
                                 {{this.name}}
                             </option>
                             {{/each}}
@@ -71,7 +71,7 @@
 </div>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        const form = document.querySelector("#editPlayerModal");
+        const form = document.querySelector("#edit-player-form");
         const nameInput = form.querySelector("input[name='name']");
         const goalsInput = form.querySelector("input[name='goals']");
         const descriptionInput = form.querySelector("textarea[name='description']");

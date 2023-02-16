@@ -119,8 +119,16 @@ footer {
     color: #fff !important;
     text-transform: uppercase;
     font-weight: bold;
+    margin: 0 10px;
 }
 
+.nav-link-wc:hover {
+    background-color: #56042C;
+}
+
+.active-link {
+    background-color: #56042C;
+}
 .container-home {
     position: relative;
     top: 67px;
@@ -144,4 +152,76 @@ footer {
     font-family: Barlow Condensed, sans-serif;
     font-weight: 600;
     font-size: large;
+}
+/* Subanner */
+.sub-main-banner {
+    padding-top: 0;
+}
+
+.sub-banner {
+    background: #071f40 url('/images/qatar_cup_02.jpg') no-repeat;
+    background-size: cover;
+    width: 100%;
+    min-height: 400px;
+    display: grid;
+    align-content: center;
+    justify-content: flex-end;
+}
+
+.sub-banner h1 {
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 45px;
+    font-weight: 600;
+    margin-right: 200px;
+}
+
+/* Body player detail */
+.player-details-div-total figure {
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 350px;
+    overflow: hidden;
+    object-fit: contain;
+}
+
+.player-details-div span {
+    font-size: 30px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    color: #ee1d36;
+}
+
+.common-heading {
+    font-weight: 600;
+    color: #071f40;
+    font-size: 35px;
+}
+
+.list-unstyled {
+    list-style: none;
+    padding-left: 0;
+}
+
+.list-unstyled>li>span {
+    font-size: 18px;
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+}
+
+.list-unstyled .information {
+    color: #56042C;
+    font-weight: 600;
+}
+
+.captain-icon {
+    height: 24px;
+    width: 24px;
+}
+
+.player-description {
+    color: #56042c;
+    font-size: 18px;
 }

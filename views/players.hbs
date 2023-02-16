@@ -16,8 +16,8 @@
 
 <body>
   {{> header}}
+  {{> subbanner}}
   <div class="list-nations-container">
-    <h1>Players</h1>
     <button id="create-player-btn" class="btn-create-nation" data-bs-toggle="modal" data-bs-target="#createPlayerModal">
       <i class="fa-solid fa-plus"></i>
       Create new player
@@ -25,7 +25,7 @@
     <div class="container">
       <div class="row w-100">
         {{#each players}}
-        <div class="col-md-3 col-sm-2 ">
+        <a href="/players/{{this._id}}" class="col-md-3 col-sm-2" style="text-decoration: none; color: #000">
           <div class="card-players">
             <div class="card-players-image">
               <img src="{{this.image}}" alt="{{this.name}}" />
@@ -35,29 +35,31 @@
             </div>
             <div class="card-nations-footer">
               <button id="edit-player-btn" data-bs-toggle="modal" data-bs-target="#editPlayerModal"
-                class="card-nations-btn-edit" onclick="openEditModal('{{this._id}}')">
+                class="card-nations-btn-edit" onclick="openEditPlayerModal('{{this._id}}')">
                 <i class="fa-solid fa-pen"></i>
                 Edit
               </button>
-              <button data-id="{{this._id}}" data-bs-toggle="modal" data-bs-target="#deleteNationModal" class="card-nations-btn-delete">
+              <button data-id="{{this._id}}" data-bs-toggle="modal" data-bs-target="#deletePlayerModal"
+                class="card-nations-btn-delete">
                 <i class="fa-solid fa-trash"></i>
                 Delete
               </button>
             </div>
           </div>
-        </div>
+        </a>
         {{/each}}
       </div>
     </div>
   </div>
 
+  {{> modalDeletePlayer}}
   {{> modalEditPlayer}}
   {{> modalCreatePlayer}}
   {{> footer}}
 </body>
 
 <script>
-  function openEditModal(playerId) {
+  function openEditPlayerModal(playerId) {
     // make an AJAX request to get the nation data
     $.ajax({
       url: '/players/edit/' + playerId,
@@ -71,7 +73,7 @@
         $('#edit-player-position').val(data.player.position);
         $('#edit-player-goals').val(data.player.goals);
         $('#edit-player-club').val(data.player.club);
-        $('#edit-player-isCaptain').val(data.player.isCaptain);
+        $('#edit-player-isCaptain').val(data.player.isCaptain.toString());
         $('#edit-player-image').val(data.player.image);
       }
     });

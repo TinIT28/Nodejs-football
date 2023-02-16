@@ -50,6 +50,10 @@ body {
 .card-players-image img {
     height: 300px;
     width: 100%;
+    display: flex;
+        justify-content: center;
+        overflow: hidden;
+        object-fit: cover;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
 }
@@ -123,7 +127,7 @@ body {
 
 .list-nations-container {
     position: relative;
-    top: 110px;
+    top: 50px;
     height: fit-content;
     margin-bottom: 150px;
 }
