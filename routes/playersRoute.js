@@ -6,7 +6,7 @@ const authorization = require("../middelware/authorization");
 
 router
   .route("/")
-  .get(playersController.players)
+  .get(authenticate.verifyUser, playersController.players)
   .post(
     authenticate.verifyUser,
     authorization.isAdmin,

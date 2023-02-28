@@ -33,10 +33,6 @@ exports.verifyUser = function (req, res, next) {
       return next(err);
     }
 
-    if (req.isAuthenticated()) {
-      return res.redirect("/");
-    }
-
     if (!user) {
       if (!req.isAuthenticated()) {
         req.flash("error_msg", "Please log in first");

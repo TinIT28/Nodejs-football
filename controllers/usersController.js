@@ -43,7 +43,11 @@ class userController {
   }
 
   loginPage(req, res, next) {
-    res.render("login");
+    if (req.isAuthenticated()) {
+      res.redirect("/");
+    } else {
+      res.render("login");
+    }
   }
 
   dashboard(req, res, next) {

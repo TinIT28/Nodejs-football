@@ -9,11 +9,7 @@ const { ensureAuthenticated } = require("../middelware/auth");
 
 router
   .route("/")
-  .get(
-    authenticate.verifyUser,
-    authorization.isAdmin,
-    nationsController.nations
-  )
+  .get(authenticate.verifyUser, nationsController.nations)
   .post(
     authenticate.verifyUser,
     authorization.isAdmin,
@@ -21,11 +17,7 @@ router
   );
 router
   .route("/:id")
-  .get(
-    authenticate.verifyUser,
-    authorization.isAdmin,
-    nationsController.nationDetail
-  );
+  .get(authenticate.verifyUser, nationsController.nationDetail);
 router
   .route("/edit/:id")
   .get(
