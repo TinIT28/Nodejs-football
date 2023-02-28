@@ -59,6 +59,8 @@ class playersController {
   players(req, res, next) {
     Player.find({})
       .then((players) => {
+        res.locals.isAuthenticated = req.isAuthenticated();
+        res.locals.user = req.user;
         res.render("players", {
           title: "players",
           players: players,

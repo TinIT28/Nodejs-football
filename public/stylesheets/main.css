@@ -17,12 +17,15 @@
 .card-container img {
     height: 150px;
     width: 100%;
+    display: flex;
+        justify-content: center;
+        overflow: hidden;
+        object-fit: cover;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
 }
 
 .img-player {
-    height: fit-content !important;
     width: 100%;
 }
 
@@ -86,17 +89,15 @@ footer {
     text-align: center;
     background-color: #333;
     color: white;
-    position: relative;
     bottom: 0;
     width: 100%;
-    z-index: -1;
 }
 
 .header-football {
     position: fixed;
     top: 0;
     width: 100%;
-    z-index: 2;
+    z-index: 1;
 }
 
 .navbar-logo {
@@ -129,6 +130,7 @@ footer {
 .active-link {
     background-color: #56042C;
 }
+
 .container-home {
     position: relative;
     top: 67px;
@@ -140,6 +142,7 @@ footer {
 .banner {
     min-height: 700px;
     position: relative;
+    margin-top: 30px;
 }
 
 .carousel-container-item {
@@ -153,6 +156,7 @@ footer {
     font-weight: 600;
     font-size: large;
 }
+
 /* Subanner */
 .sub-main-banner {
     padding-top: 0;

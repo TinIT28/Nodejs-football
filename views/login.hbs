@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheets/login.css">
+    <link rel="stylesheet" href="/stylesheets/main.css">
+    <title>Login</title>
+</head>
+{{> header }}
+<section class="align">
+    <div class="grid">
+        <form action="/users/login" method="post" class="form login">
+
+            <header class="login__header">
+                <h3 class="login__title">Login</h3>
+            </header>
+
+            <div class="login__body">
+                <div class="form__field">
+                    <input type="text" placeholder="Username" name="username">
+                    <p class="message-login-error"></p>
+                </div>
+
+                <div class="form__field">
+                    <input type="password" placeholder="Password" name="password">
+                    <p class="message-login-error"></p>
+                </div>
+                {{#if (isNotEmpty success_msg)}}
+                {{success_msg}}
+                {{/if}}
+                {{#if (isNotEmpty error_msg)}}
+                <div class="error">
+                    {{error_msg}}
+                </div>
+                {{/if}}
+                {{#if (isNotEmpty err_msg)}}
+                <div class="err">
+                    {{err_msg}}
+                </div>
+                {{/if}}
+                {{#if (isNotEmpty message)}}
+                <div class="message">
+                    {{message}}
+                </div>
+                {{/if}}
+            </div>
+
+            <footer class="login__footer">
+                <button type="submit">Login</button>
+                <p><span class="icon icon--info">?</span><a href="#">Forgot Password</a></p>
+            </footer>
+        </form>
+
+    </div>
+
+
+</section>
+{{> footer}}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector('.login');
+        const usernameInput = document.querySelector("input[name='username']");
+        const passwordInput = document.querySelector("input[name='password']");
+        const errorTags = document.querySelectorAll('.message-login-error');
+        const errMsg = document.querySelector('.error');
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const usernameValue = usernameInput.value.trim();
+            const passwordValue = passwordInput.value.trim();
+            if (!usernameValue) {
+                errorTags[0].textContent = "Please input username";
+            } else {
+                errorTags[0].textContent = "";
+            }
+            if (!passwordValue) {
+                errorTags[1].textContent = "Please input password";
+            } else {
+                errorTags[1].textContent = ""
+            }
+
+            if (errMsg) {
+                event.preventDefault();
+            }
+
+            if (usernameValue && passwordValue) {
+                form.submit();
+            }
+        });
+    })
+</script>
+
+</html>

@@ -35,12 +35,12 @@
             </div>
             <div class="card-nations-footer">
               <button id="edit-player-btn" data-bs-toggle="modal" data-bs-target="#editPlayerModal"
-                class="card-nations-btn-edit" onclick="openEditPlayerModal('{{this._id}}')">
+                class="card-nations-btn-edit" onclick="event.preventDefault(); openEditPlayerModal('{{this._id}}')">
                 <i class="fa-solid fa-pen"></i>
                 Edit
               </button>
               <button data-id="{{this._id}}" data-bs-toggle="modal" data-bs-target="#deletePlayerModal"
-                class="card-nations-btn-delete">
+                class="card-nations-btn-delete" onclick="event.preventDefault()">
                 <i class="fa-solid fa-trash"></i>
                 Delete
               </button>

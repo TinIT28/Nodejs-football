@@ -8,9 +8,14 @@ const cookieParser = require("cookie-parser");
 const logger = require("morgan");
 const connectDatabase = require("./config/database");
 const methodOverride = require("method-override");
+const passport = require("passport");
+const session = require("express-session");
+const flash = require("connect-flash");
+require("./middelware/passport")(passport);
 
 const nationsRouter = require("./routes/nationsRoute");
 const playersRouter = require("./routes/playersRoute");
+const usersRouter = require("./routes/usersRoute");
 const mainRouter = require("./routes/mainRoute");
 
 const app = express();
@@ -30,6 +35,31 @@ hbs.registerHelper("eq", function (a, b) {
 hbs.registerHelper("toString", function (a) {
   return a.toString();
 });
+hbs.registerHelper("isNotEmpty", function (a) {
+  return a && a.length > 0;
+});
+hbs.registerHelper("isTrue", function (a) {
+  return a === true;
+});
+
+app.use(
+  session({
+    secret: "my_secret_key",
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash("success_msg");
+  res.locals.error_msg = req.flash("error_msg");
+  res.locals.error = req.flash("error");
+  res.locals.err_msg = req.flash("err_msg");
+  next();
+});
+
 app.use(express.static(__dirname + "/public"));
 
 app.use(logger("dev"));
@@ -41,6 +71,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/nations", nationsRouter);
 app.use("/", mainRouter);
 app.use("/players", playersRouter);
+app.use("/users", usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

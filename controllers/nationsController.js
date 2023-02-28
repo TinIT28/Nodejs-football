@@ -1,10 +1,15 @@
 const Nation = require("../models/nationsModel");
 const ErrorHandler = require("../middelware/error");
+const { isAuthenticatedUser } = require("../middelware/auth");
+
+const PAGE_SIZE = 8;
 
 class nationController {
   nations(req, res, next) {
     Nation.find({})
       .then((nations) => {
+        res.locals.isAuthenticated = req.isAuthenticated();
+        res.locals.user = req.user;
         res.render("nations", {
           title: "Nations",
           nations: nations,
@@ -19,39 +24,40 @@ class nationController {
       return next(new Error("Nation not found"));
     }
     Nation.findById(id)
-    .then((nation) => {
-      res.status(200).json({
-        nation: nation
+      .then((nation) => {
+        res.status(200).json({
+          nation: nation,
+        });
       })
-    })
-    .catch(next)
+      .catch(next);
   }
 
   create(req, res, next) {
     const { name, description, image } = req.body;
     Nation.create({ name, description, image })
       .then((nation) => {
-        res.redirect('/nations')
+        res.redirect("/nations");
       })
       .catch((error) => {
         console.error(error);
-        res.status(500).send({ success: false, message: "Fail to create nation" });
+        res
+          .status(500)
+          .send({ success: false, message: "Fail to create nation" });
       });
   }
 
   formEdit(req, res, next) {
     const nationId = req.params.id;
-    Nation.findById(nationId)
-    .then((nation) => {
+    Nation.findById(nationId).then((nation) => {
       res.json({
         nation: {
           id: nation._id,
           name: nation.name,
           description: nation.description,
-          image: nation.image
-        }
+          image: nation.image,
+        },
       });
-    })
+    });
   }
 
   update(req, res, next) {
@@ -61,7 +67,7 @@ class nationController {
     }
     Nation.findByIdAndUpdate(id, req.body, { new: true })
       .then((nation) => {
-        res.redirect('/nations')
+        res.redirect("/nations");
       })
       .catch(next);
   }
@@ -72,7 +78,7 @@ class nationController {
       return next(new ErrorHandler("Not found nation", 404));
     }
     nation.remove().then(() => {
-      res.redirect('/nations')
+      res.redirect("/nations");
     });
   }
 }

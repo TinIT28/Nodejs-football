@@ -19,6 +19,11 @@
         </a>
         <div class="collapse navbar-collapse">
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+            {{#if (isTrue user.isAdmin) }}
+            <li class="nav-item">
+              <a class="nav-link nav-link-wc" href="/dashboard">Dashboard</a>
+            </li>
+            {{/if}}
             <li class="nav-item">
               <a class="nav-link nav-link-wc" href="/">Home</a>
             </li>
@@ -28,8 +33,31 @@
             <li class="nav-item">
               <a class="nav-link nav-link-wc" href="/players">Players</a>
             </li>
+        {{#if (isTrue user.isAdmin) }}
+        <li class="nav-item">
+          <a class="nav-link nav-link-wc" href="/users">Users</a>
+        </li>
+        {{/if}}
+        
+        <li class="nav-item">
+          {{#if isAuthenticated}}
+        <li class="nav-item">
+          <span class="navbar-text mt-3" style="color: #fff">Welcome, {{user.username}}</span>
+        </li>
+        <li class="nav-item">
+          <form action="/users/logout" method="POST">
+            <button type="submit" class="nav-link nav-link-wc">Logout</button>
+          </form>
+        </li>
+        {{else}}
+        <li class="nav-item">
+          <a class="nav-link nav-link-wc" href="/users/login">Login</a>
+        </li>
+        {{/if}}
+        </li>
           </ul>
         </div>
+      
       </div>
     </nav>
   </header>
@@ -58,7 +86,26 @@
       link.classList.add('active-link');
     }
   });
+</script>
 
+<script>
+  const userContainer = document.getElementById('user-container');
+  function showUser(user) {
+    const username = document.createElement('span')
+    username.textContent = user.username,
+      username.classList.add('me-3');
+    userContainer.appendChild(username);
+
+    const logoutBtn = document.createElement('a');
+    logoutBtn.href = '/users/logout',
+      logoutBtn.textContent = 'Logout',
+      logoutBtn.classList.add('btn', 'btn-secondary');
+    userContainer.appendChild(logoutBtn);
+  }
+
+  function hideUser() {
+    userContainer.innerHTML = '';
+  }
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

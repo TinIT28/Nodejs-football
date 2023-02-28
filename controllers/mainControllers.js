@@ -9,6 +9,8 @@ class mainController {
             Player.find({}).limit(4),
         ])
         .then(([nations, players]) => {
+            res.locals.isAuthenticated = req.isAuthenticated();
+            res.locals.user = req.user;
             res.render('main', {
                 title: 'Home',
                 nations: nations,
