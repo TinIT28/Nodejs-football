@@ -6,7 +6,10 @@ const authorization = require("../middelware/authorization");
 const passport = require("passport");
 require("../middelware/passport")(passport);
 
-router.route("/register").post(userController.register);
+router
+  .route("/register")
+  .get(userController.registerPage)
+  .post(userController.register);
 router
   .route("/login")
   .get(userController.loginPage)

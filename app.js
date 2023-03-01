@@ -41,6 +41,9 @@ hbs.registerHelper("isNotEmpty", function (a) {
 hbs.registerHelper("isTrue", function (a) {
   return a === true;
 });
+hbs.registerHelper("notExist", function (a) {
+  return !a;
+});
 
 app.use(
   session({

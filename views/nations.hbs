@@ -18,10 +18,12 @@
   {{> header}}
   {{> subbanner}}
   <div class="list-nations-container">
+    {{#if (isTrue user.isAdmin)}}
     <button id="create-nation-btn" class="btn-create-nation" data-bs-toggle="modal" data-bs-target="#createNationModal">
       <i class="fa-solid fa-plus"></i>
       Create new nation
     </button>
+    {{/if}}
     <div class="container">
       <div class="row w-100">
         {{#each nations}}
@@ -34,6 +36,7 @@
               <h3 class="card-nations-name">{{this.name}}</h3>
               <p class="card-nations-description">{{this.description}}</p>
             </div>
+            {{#if (isTrue user.isAdmin)}}
             <div class="card-nations-footer">
               <button id="edit-nation-btn" data-bs-toggle="modal" data-bs-target="#editNationModal"
                 class="card-nations-btn-edit" onclick="openEditModal('{{this._id}}')">
@@ -46,6 +49,7 @@
                 Delete
               </button>
             </div>
+            {{/if}}
           </div>
         </div>
         {{/each}}

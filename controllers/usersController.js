@@ -7,6 +7,10 @@ const { getToken } = require("../middelware/authenticate");
 const authenticate = require("../middelware/authenticate");
 
 class userController {
+  registerPage(req, res, next) {
+    res.render("register");
+  }
+
   async register(req, res, next) {
     const { username, password, confirmPassword } = req.body;
     const existingUser = await User.findOne({ username });

@@ -33,27 +33,36 @@
             <li class="nav-item">
               <a class="nav-link nav-link-wc" href="/players">Players</a>
             </li>
-
-        
-        <li class="nav-item">
-          {{#if isAuthenticated}}
-        <li class="nav-item">
-          <span class="navbar-text mt-3" style="color: #fff">Welcome, {{user.username}}</span>
-        </li>
-        <li class="nav-item">
-          <form action="/users/logout" method="POST">
-            <button type="submit" class="nav-link nav-link-wc">Logout</button>
-          </form>
-        </li>
-        {{else}}
-        <li class="nav-item">
-          <a class="nav-link nav-link-wc" href="/users/login">Login</a>
-        </li>
-        {{/if}}
-        </li>
+            {{#if (isTrue user.isAdmin) }}
+            <li class="nav-item">
+              <a class="nav-link nav-link-wc" href="/users">Users</a>
+            </li>
+            {{/if}}
+            
+            <li class="nav-item">
+              {{#if isAuthenticated}}
+            <li class="nav-item">
+              <span class="navbar-text mt-3" style="color: #fff">Welcome, {{user.username}}</span>
+            </li>
+            <li class="nav-item">
+              <form action="/users/logout" method="POST">
+                <button type="submit" class="nav-link nav-link-wc">Logout</button>
+              </form>
+            </li>
+            {{else}}
+            <li class="nav-item">
+              <a class="nav-link nav-link-wc" href="/users/login">Login</a>
+            </li>
+            {{/if}}
+            </li>
+{{#if (notExist isAuthenticated)}}
+<li class="nav-item">
+  <a class="nav-link nav-link-wc" href="/register">Sign Up</a>
+</li>
+{{/if}}
           </ul>
         </div>
-      
+
       </div>
     </nav>
   </header>
@@ -63,11 +72,11 @@
 </html>
 
 <script>
-      // Get all the nav links
-      const navLinks = document.querySelectorAll('.nav-link-wc');
+    // Get all the nav links
+    const navLinks = document.querySelectorAll('.nav-link-wc');
 
-      // Add an event listener to each link
-      navLinks.forEach(link => {
+    // Add an event listener to each link
+    navLinks.forEach(link => {
       link.addEventListener('click', function () {
         // Remove the active class from all links
         navLinks.forEach(link => link.classList.remove('active-link'));
