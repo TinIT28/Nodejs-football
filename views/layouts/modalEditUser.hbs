@@ -1,0 +1,120 @@
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createNationModalLabel">Edit user</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="edit-user-form" method="POST">
+                    <div class="mb-3">
+                        <label class="col-form-label">Full name:</label>
+                        <input id="edit-user-fullName" type="text" class="form-control" name="fullName">
+                        <p class="message-error"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="col-form-label">Birth:</label>
+                        <input type="number" id="edit-user-dayOfBirth" name="dateOfBirth" placeholder="YYYY"
+                            maxlength="4">
+                        <div id="calendar"></div>
+                        <p class="message-error"></p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("#edit-user-form");
+        const fullNameInput = form.querySelector("input[name='fullName']");
+        const dateOfBirthInput = form.querySelector("input[name='dateOfBirth']");
+        const errorTags = form.querySelectorAll(".message-error");
+
+        function clearErrorMessage(index) {
+            errorTags[index].textContent = "";
+        }
+
+        function validateFullName() {
+            if (!fullNameInput.value.trim()) {
+                errorTags[0].textContent = "Please input full name";
+            } else {
+                clearErrorMessage(1);
+            }
+        }
+
+        function validateDateOfBirth() {
+            const dateOfBirthValue = dateOfBirthInput.value;
+            if (!dateOfBirthValue) {
+                errorTags[1].textContent = "Please input year of birth";
+            } else if (dateOfBirthValue < 1900) {
+                errorTags[1].textContent = "Please input year more than 1900";
+            } else {
+                clearErrorMessage(1);
+            }
+        }
+
+        function validateForm() {
+            validateFullName();
+            validateDateOfBirth();
+
+            // Return true if there are no error messages, otherwise false
+            return !Array.from(errorTags).some((tag) => tag.textContent !== "");
+        }
+
+        fullNameInput.addEventListener("input", validateFullName);
+        dateOfBirthInput.addEventListener("input", validateDateOfBirth);
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+            if (validateForm()) {
+                form.submit();
+            }
+        });
+    });
+</script>
+
+<script>
+    // Get the input field and calendar div
+    const input = document.getElementById("edit-user-dayOfBirth");
+    const calendar = document.getElementById("calendar");
+
+    // Add a click event listener to the input field
+    input.addEventListener("click", function () {
+        // Toggle the visibility of the calendar div
+        if (calendar.style.display === "block") {
+            calendar.style.display = "none";
+        } else {
+            calendar.style.display = "block";
+        }
+    });
+
+    // Populate the calendar div with years
+    const currentYear = new Date().getFullYear();
+    const startYear = currentYear - 100;
+    const endYear = currentYear - 18;
+    let calendarContent = "";
+    for (let year = startYear; year <= endYear; year++) {
+        calendarContent += `<div>${year}</div>`;
+    }
+    calendar.innerHTML = calendarContent;
+
+    // Add click event listeners to the calendar div
+    calendar.addEventListener("click", function (event) {
+        // Check if the clicked element is a year
+        if (event.target.tagName === "DIV") {
+            // Set the input field value to the clicked year
+            input.value = event.target.textContent;
+            // Hide the calendar div
+            calendar.style.display = "none";
+        }
+    });
+
+</script>

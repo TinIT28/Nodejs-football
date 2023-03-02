@@ -18,22 +18,28 @@
   {{> header}}
   {{> subbanner}}
   <div class="list-nations-container">
+    {{#if (isTrue user.isAdmin)}}
     <button id="create-player-btn" class="btn-create-nation" data-bs-toggle="modal" data-bs-target="#createPlayerModal">
       <i class="fa-solid fa-plus"></i>
       Create new player
     </button>
+    {{/if}}
     <div class="container">
       <div class="row w-100">
         {{#each players}}
-        <a href="/players/{{this._id}}" class="col-md-3 col-sm-2" style="text-decoration: none; color: #000">
+        <a href="/players/{{this.slug}}" class="col-md-3 col-sm-2" style="text-decoration: none; color: #000">
           <div class="card-players">
             <div class="card-players-image">
               <img src="{{this.image}}" alt="{{this.name}}" />
             </div>
-            <div class="card-nations-body">
-              <h3 class="card-nations-name">{{this.name}}</h3>
+            <div class="card-players-body">
+              <h3 class="card-players-name">{{this.name}}</h3>
+            
+              <img src="{{this.nations.image}}" class="img-nation-player" />
             </div>
+            
             <div class="card-nations-footer">
+              {{#if this.isAdmin}}
               <button id="edit-player-btn" data-bs-toggle="modal" data-bs-target="#editPlayerModal"
                 class="card-nations-btn-edit" onclick="event.preventDefault(); openEditPlayerModal('{{this._id}}')">
                 <i class="fa-solid fa-pen"></i>
@@ -44,6 +50,7 @@
                 <i class="fa-solid fa-trash"></i>
                 Delete
               </button>
+            {{/if}}
             </div>
           </div>
         </a>

@@ -20,12 +20,16 @@ module.exports = function (passport) {
               return done(null, false);
             }
             // Compare password
+            if (password.length < 6) {
+              req.flash("error_msg", "Password must be more than 6 characters");
+              return done(null, false);
+            }
             bycrypt.compare(password, user.password, (err, isMatch) => {
               if (err) throw err;
               if (isMatch) {
                 return done(null, user);
               } else {
-                req.flash("error_msg", "Password is correct");
+                req.flash("error_msg", "Password isn't correct");
                 return done(null, false);
               }
             });

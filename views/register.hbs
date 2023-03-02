@@ -5,11 +5,193 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheets/login.css">
+    <link rel="stylesheet" href="/stylesheets/main.css">
     <title>Register</title>
 </head>
+{{> header }}
+<section class="align">
+    <div class="grid">
+        <form action="/users/register" method="post" class="form login">
 
-<body>
+            <header class="login__header">
+                <h3 class="login__title">Register</h3>
+            </header>
 
-</body>
+            <div class="login__body">
+
+                <div class="form__field">
+                    <input type="text" placeholder="Username" name="username" value="{{username}}">
+                    <p class="message-login-error"></p>
+                </div>
+
+                <div class="form__field">
+                    <input type="password" placeholder="Password" name="password">
+                    <p class="message-login-error"></p>
+                </div>
+                <div class="form__field">
+                    <input type="password" placeholder="Confirm Password" name="confirmPassword">
+                    <p class="message-login-error"></p>
+                </div>
+                <div class="form__field">
+                    <input type="text" placeholder="Full name" name="fullName" value="{{fullName}}">
+                    <p class="message-login-error"></p>
+                </div>
+                <div class="form__field">
+                    <input type="number" id="birth-year" name="dateOfBirth" placeholder="YYYY" maxlength="4"
+                        value="{{dateOfBirth}}">
+                    <div id="calendar"></div>
+                    <p class="message-login-error"></p>
+                </div>
+                {{#if (isNotEmpty success_msg)}}
+                <div class="success" style="color: #54e52c">
+
+                    {{success_msg}}
+                </div>
+                {{/if}}
+                {{#if (isNotEmpty error_msg)}}
+                <div class="error" style="color: red;">
+                    {{error_msg}}
+                </div>
+                {{/if}}
+            </div>
+
+            <footer class="login__footer">
+                <button type="submit">Sign Up</button>
+                <p><span class="icon icon--info">?</span><a href="#">Have account? Sign in</a></p>
+            </footer>
+        </form>
+
+    </div>
+
+</section>
+{{> footer}}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector('.login');
+        const usernameInput = document.querySelector("input[name='username']");
+        const passwordInput = document.querySelector("input[name='password']");
+        const confirmPasswordInput = document.querySelector("input[name='confirmPassword']");
+        const dateOfBirthInput = document.querySelector("input[name='dateOfBirth']");
+        const fullNameInput = document.querySelector("input[name='fullName']");
+        const errorTags = document.querySelectorAll('.message-login-error');
+        const errMsg = document.querySelector('.error');
+
+        function clearErrorMessage(index) {
+            errorTags[index].textContent = "";
+        }
+
+        function validateUsername() {
+            if (!usernameInput.value.trim()) {
+                errorTags[0].textContent = "Please input username";
+            } else {
+                clearErrorMessage(0);
+            }
+        }
+
+        function validatePassword() {
+            if (!passwordInput.value.trim()) {
+                errorTags[1].textContent = "Please input password";
+            } else {
+                clearErrorMessage(1);
+            }
+        }
+
+        function validateConfirmPassword() {
+            if (!confirmPasswordInput.value.trim()) {
+                errorTags[2].textContent = "Please input confirm password";
+            } else {
+                clearErrorMessage(2);
+            }
+        }
+
+        function validateFullName() {
+            if (!fullNameInput.value.trim()) {
+                errorTags[3].textContent = "Please input full name";
+            } else {
+                clearErrorMessage(3);
+            }
+        }
+
+        function validateDateOfBirth() {
+            const dateOfBirthValue = dateOfBirthInput.value;
+            if (!dateOfBirthValue) {
+                errorTags[4].textContent = "Please input year of birth";
+            } else if (dateOfBirthValue < 1900) {
+                errorTags[4].textContent = "Please input year more than 1900";
+            } else {
+                clearErrorMessage(4);
+            }
+        }
+
+        function validateForm() {
+            validateUsername();
+            validatePassword();
+            validateConfirmPassword();
+            validateFullName();
+            validateDateOfBirth();
+
+            // Return true if there are no error messages, otherwise false
+            return !Array.from(errorTags).some((tag) => tag.textContent !== "");
+        }
+
+        usernameInput.addEventListener("input", validateUsername);
+        passwordInput.addEventListener("input", validatePassword);
+        confirmPasswordInput.addEventListener("input", validateConfirmPassword);
+        fullNameInput.addEventListener("input", validateFullName);
+        dateOfBirthInput.addEventListener("input", validateDateOfBirth);
+
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            if (validateForm()) {
+                form.submit();
+            }
+        });
+    })
+        </script>
+                    
+                    <script>
+                        // Get the input field and calendar div
+                        const input = document.getElementById("birth-year");
+                        const calendar = document.getElementById("calendar");
+
+                        // Add a click event listener to the input field
+                        input.addEventListener("click", function () {
+                            // Toggle the visibility of the calendar div
+                            if (calendar.style.display === "block") {
+                                calendar.style.display = "none";
+                            } else {
+                                calendar.style.display = "block";
+                            }
+                        });
+
+                        // Populate the calendar div with years
+                        const currentYear = new Date().getFullYear();
+                        const startYear = currentYear - 100;
+                        const endYear = currentYear - 18;
+                        let calendarContent = "";
+                        for (let year = startYear; year <= endYear; year++) {
+                            calendarContent += `<div>${year}</div>`;
+                        }
+                        calendar.innerHTML = calendarContent;
+
+                        // Add click event listeners to the calendar div
+                        calendar.addEventListener("click", function (event) {
+                            // Check if the clicked element is a year
+                            if (event.target.tagName === "DIV") {
+                                // Set the input field value to the clicked year
+                                input.value = event.target.textContent;
+                                // Hide the calendar div
+                                calendar.style.display = "none";
+                            }
+                        });
+
+</script>
 
 </html>

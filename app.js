@@ -11,6 +11,7 @@ const methodOverride = require("method-override");
 const passport = require("passport");
 const session = require("express-session");
 const flash = require("connect-flash");
+const slugify = require("slugify");
 require("./middelware/passport")(passport);
 
 const nationsRouter = require("./routes/nationsRoute");
@@ -41,8 +42,14 @@ hbs.registerHelper("isNotEmpty", function (a) {
 hbs.registerHelper("isTrue", function (a) {
   return a === true;
 });
+hbs.registerHelper("isFalse", function (a) {
+  return a === false;
+});
 hbs.registerHelper("notExist", function (a) {
   return !a;
+});
+hbs.registerHelper("firstChar", function (a) {
+  return a.trim().charAt(0).toUpperCase();
 });
 
 app.use(

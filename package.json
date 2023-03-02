@@ -29,7 +29,8 @@
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
     "passport-local-mongoose": "^7.1.2",
-    "scss": "^0.2.4"
+    "scss": "^0.2.4",
+    "slugify": "^1.6.5"
   },
   "devDependencies": {
     "express-handlebars": "^6.0.7"

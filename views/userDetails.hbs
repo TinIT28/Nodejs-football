@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="/stylesheets/users.css">
+    <link rel="stylesheet" href="/stylesheets/main.css">
+    <title>{{title}}</title>
+</head>
+
+
+<body>
+    {{> header}}
+    <div class="body-user-details">
+        <div class="user-card skeleton">
+            <div class="user-cover">
+                <img class="user-avatar" src="
+        https://yossiabramov.com/images/avatar.jpeg" alt="user profile image" />
+            </div>
+            <div class="user-details">
+                <div class="user-name hide-text">{{user.username}}</div>
+                <div class="user-email hide-text">Full name: {{user.fullName}}</div>
+                <div class="user-email hide-text">Birth: {{user.dateOfBirth}}</div>
+            </div>
+
+            <button id="btnEditUserModal" data-bs-toggle="modal" data-bs-target="#editUserModal"
+                class="contact-user hide-text" onclick="openEditUserModal('{{user._id}}')">Edit</button>
+
+        </div>
+
+    </div>
+    {{> modalEditUser}}
+    {{> footer}}
+</body>
+
+<script>
+    function openEditUserModal(userId) {
+        $.ajax({
+            url: '/users/edit/' + userId,
+            method: 'GET',
+            success: function (data) {
+                // populate the modal fields with the nation data
+                $('#edit-user-form').attr('action', '/users/edit/' + data.user.id + '?_method=PUT');
+                $('#edit-user-fullName').val(data.user.fullName)
+                $('#edit-user-dayOfBirth').val(data.user.birth);
+            }
+        });
+    }
+</script>
+
+<script>
+    const $el = document.querySelector(".user-card");
+
+    // Loading finished
+    setTimeout(() => {
+        $el.classList.remove("skeleton");
+        $el
+            .querySelectorAll(".hide-text")
+            .forEach((el) => el.classList.remove("hide-text"));
+    }, 3000);
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"
+    integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+
+</html>

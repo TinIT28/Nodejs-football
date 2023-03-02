@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800|Poppins&display=swap');
 .img-flag {
     width: 100%;
     height: 50px;
@@ -5,6 +6,7 @@
 
 body {
     width: 100%;
+    font-family: 'Montserrat', sans-serif;
 }
 
 
@@ -43,7 +45,9 @@ body {
 .card-nations-image img {
     object-fit: cover;
     width: 100%;
-    height: 100%;
+    height: 170px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
     object-position: top;
 }
 
@@ -58,7 +62,8 @@ body {
     border-top-right-radius: 5px;
 }
 
-.card-nations-name {
+.card-nations-name,
+.card-players-name {
     font-weight: bold;
     font-size: large;
     margin: 5px 0;
@@ -154,4 +159,15 @@ footer {
     color: white;
     bottom: 0;
     width: 100%;
+}
+.card-players-body {
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+}
+
+.img-nation-player {
+    width: 50px;
+    height: 30px;
+    padding: 0 0 0 10px;
 }

@@ -1,4 +1,6 @@
 const Player = require('../models/playersModel');
+const Nation = require("../models/nationsModel");
+const slugify = require("slugify");
 
 let clubData = [
   { id: "1", name: "Argentina" },
@@ -57,13 +59,20 @@ let isCaptainData = [
 
 class playersController {
   players(req, res, next) {
-    Player.find({})
-      .then((players) => {
+    Promise.all([
+      Player.find({}).populate("nations", "name image"),
+      Nation.find({}),
+    ])
+      .then(([players, nations]) => {
+        players.forEach((player) => {
+          player.isAdmin = req.isAuthenticated() && req.user.isAdmin;
+        });
         res.locals.isAuthenticated = req.isAuthenticated();
         res.locals.user = req.user;
         res.render("players", {
           title: "players",
           players: players,
+          nations: nations,
           clubs: clubData,
           positions: positionData,
           captain: isCaptainData,
@@ -73,12 +82,17 @@ class playersController {
   }
 
   playerDetails(req, res, next) {
-    const playerId = req.params.id;
-    if (!playerId) {
+    const playerSlug = req.params.slug;
+    if (!playerSlug) {
       return next(new Error("Player not found"));
     }
-    Player.findById(playerId)
+    const playerQuery = { slug: playerSlug };
+    Player.findOne(playerQuery)
+      .populate("nations", "image")
       .then((player) => {
+        if (!player) {
+          return next(new Error("Player not found"));
+        }
         res.render("playerDetails", {
           title: "Player Details",
           player: player,
@@ -87,17 +101,49 @@ class playersController {
       .catch(next);
   }
 
-  create(req, res, next) {
-    Player.create(req.body)
-      .then((player) => {
-        res.redirect("/players");
-      })
-      .catch((error) => {
-        console.error(error);
-        res
-          .status(500)
-          .send({ success: false, message: "Fail to create nation" });
+  async create(req, res, next) {
+    const {
+      name,
+      image,
+      club,
+      description,
+      position,
+      goals,
+      isCaptain,
+      nations,
+    } = req.body;
+
+    try {
+      const player = await Player.create({
+        name,
+        image,
+        club,
+        description,
+        position,
+        goals,
+        isCaptain,
+        nations,
+        slug: slugify(name, { lower: true }),
       });
+
+      // populate the 'nations' field with the corresponding nation document
+      await player.populate("nations");
+
+      // retrieve the nation's image URL from the document
+      const nationImage = player.nations.image;
+
+      // add the nation's image URL to the player object
+      player.nationImage = nationImage;
+
+      await player.save();
+
+      res.redirect("/players");
+    } catch (error) {
+      console.error(error);
+      res
+        .status(500)
+        .send({ success: false, message: "Failed to create player" });
+    }
   }
 
   formEdit(req, res, next) {

@@ -42,6 +42,14 @@
                         </select>
                     </div>
                     <div class="mb-3">
+                        <label class="col-form-label">Nation:</label>
+                        <select class="form-select" name="nations">
+                            {{#each nations}}
+                            <option value="{{this._id}}">{{this.name}}</option>
+                            {{/each}}
+                        </select>
+                        </div>
+                        <div class="mb-3">
                         <label class="col-form-label">Goals:</label>
                         <input type="number" class="form-control" name="goals">
                         <p class="message-error"></p>

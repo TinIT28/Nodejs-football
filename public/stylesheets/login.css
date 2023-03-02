@@ -1,10 +1,12 @@
 /* helpers/align.css */
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800|Poppins&display=swap');
 
 .align {
     display: grid;
     place-items: center;
     min-height: 700px;
     padding-top: 100px;
+    font-family: 'Montserrat', sans-serif;
 }
 
 /* helpers/grid.css */
@@ -208,4 +210,19 @@ button[type='submit'] {
 .login {
     position: relative;
     z-index: 5;
+}
+#calendar {
+    display: none;
+    position: absolute;
+    top: 40px;
+    left: 0;
+    z-index: 1;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    max-height: 200px;
+    cursor: pointer;
+    /* Set a maximum height for the calendar */
+    overflow-y: auto;
+    /* Enable vertical scrolling */
 }

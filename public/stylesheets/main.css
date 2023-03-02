@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,800|Poppins&display=swap');
 .card-container {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     max-width: 300px;
@@ -7,6 +8,7 @@
     transition: all 0.5s ease-in-out;
     transform: scale(1);
     border-radius: 10px;
+
 }
 
 .card-container:hover {
@@ -136,13 +138,14 @@ footer {
     top: 67px;
     margin-bottom: 100px;
     min-height: 100%;
+    font-family: 'Montserrat', sans-serif;
 }
 
 /* Banner */
 .banner {
     min-height: 700px;
     position: relative;
-    margin-top: 30px;
+    margin-top: 45px;
 }
 
 .carousel-container-item {
@@ -225,7 +228,38 @@ footer {
     width: 24px;
 }
 
+.captain-nation {
+    width: 50px;
+    height: 34px;
+}
 .player-description {
     color: #56042c;
     font-size: 18px;
+}
+/* Avatar */
+.avatar-img {
+    background-size: 32px 32px;
+    border: 0;
+    border-radius: 50%;
+    display: block;
+    margin: 0px;
+    position: relative;
+    height: 32px;
+    width: 32px;
+    z-index: 0;
+}
+
+.avatar-img:hover {
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+/* account */
+.account {
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    background-color: gray;
+    color: white;
+    text-align: center;
+    line-height: 30px
 }

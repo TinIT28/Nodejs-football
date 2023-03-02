@@ -36,7 +36,7 @@
               <h3 class="card-nations-name">{{this.name}}</h3>
               <p class="card-nations-description">{{this.description}}</p>
             </div>
-            {{#if (isTrue user.isAdmin)}}
+            {{#if this.isAdmin}}
             <div class="card-nations-footer">
               <button id="edit-nation-btn" data-bs-toggle="modal" data-bs-target="#editNationModal"
                 class="card-nations-btn-edit" onclick="openEditModal('{{this._id}}')">

@@ -31,12 +31,13 @@ router
     }
   );
 router
-  .route("/dashboard")
-  .get(
-    authenticate.verifyUser,
-    authorization.isAdmin,
-    userController.dashboard
-  );
+  .route("/")
+  .get(authenticate.verifyUser, authorization.isAdmin, userController.getUsers);
 router.route("/logout").post(userController.signout);
+router.route("/:slug").get(authenticate.verifyUser, userController.userDetails);
+router
+  .route("/edit/:id")
+  .get(authenticate.verifyUser, userController.formEdit)
+  .put(authenticate.verifyUser, userController.update);
 
 module.exports = router;

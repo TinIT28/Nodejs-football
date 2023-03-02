@@ -13,7 +13,7 @@ router
     playersController.create
   );
 router
-  .route("/:id")
+  .route("/:slug")
   .get(authenticate.verifyUser, playersController.playerDetails);
 router
   .route("/edit/:id")

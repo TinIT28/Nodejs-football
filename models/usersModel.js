@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const passportLocalMongoose = require("passport-local-mongoose");
+const slugify = require("slugify");
 
 const userSchema = mongoose.Schema(
   {
@@ -13,6 +14,25 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    fullName: {
+      type: String,
+      require: true,
+    },
+    dateOfBirth: {
+      type: Number,
+      min: 1900,
+      max: new Date().getFullYear(),
+    },
+    slug: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    avatar: {
+      type: String,
+      default:
+        "https://static.vecteezy.com/system/resources/previews/009/734/564/original/default-avatar-profile-icon-of-social-media-user-vector.jpg",
+    },
     isAdmin: {
       type: Boolean,
       default: false,
@@ -22,6 +42,13 @@ const userSchema = mongoose.Schema(
     timestamps: true,
   }
 );
+
+userSchema.pre("save", function (next) {
+  if (!this.slug) {
+    this.slug = slugify(this.username, { lower: true });
+  }
+  next();
+});
 
 userSchema.plugin(passportLocalMongoose);
 
